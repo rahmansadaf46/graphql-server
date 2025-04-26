@@ -1,0 +1,95 @@
+scalar Long
+scalar JSON
+
+# Represents an action in the system
+type Action {
+  _id: ID!
+  createdAt: Long!
+  updatedAt: Long
+  name: String!
+  description: String
+  functionString: String
+  resourceTemplateId: ID
+  resourceTemplate: ResourceTemplate
+}
+
+# Represents a trigger in the system
+type Trigger {
+  _id: ID!
+  createdAt: Long!
+  updatedAt: Long
+  name: String!
+  description: String
+  functionString: String
+  resourceTemplateId: ID
+  resourceTemplate: ResourceTemplate
+}
+
+# Represents a response in the system
+type Response {
+  _id: ID!
+  createdAt: Long!
+  updatedAt: Long
+  name: String!
+  description: String
+  platforms: [ResponsePlatform]
+}
+
+# Platform-specific response configuration
+type ResponsePlatform {
+  integrationId: ID
+  build: Int
+  localeGroups: [ResponseLocaleGroup]
+}
+
+# Locale group for responses
+type ResponseLocaleGroup {
+  localeGroupId: ID
+  variations: [ResponseVariation]
+}
+
+# Variation of a response
+type ResponseVariation {
+  name: String!
+  responses: JSON
+}
+
+# Template for resources
+type ResourceTemplate {
+  _id: ID!
+  createdAt: Long!
+  updatedAt: Long
+  name: String!
+  description: String
+  schema: JSON
+  integrationId: String
+  functionString: String
+  key: String
+}
+
+# Represents a node in the system
+type NodeObject {
+  _id: ID!
+  createdAt: Long!
+  updatedAt: Long
+  name: String!
+  description: String
+  parents: [NodeObject]
+  parentIds: [ID]
+  root: Boolean
+  trigger: Trigger
+  triggerId: ID
+  responses: [Response]
+  responseIds: [ID]
+  actions: [Action]
+  actionIds: [ID]
+  priority: Float
+  compositeId: ID
+  global: Boolean
+  colour: String
+}
+
+# Query type for fetching data
+type Query {
+  node(nodeId: ID): NodeObject
+}
