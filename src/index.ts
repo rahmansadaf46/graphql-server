@@ -8,7 +8,7 @@ import { queryResolvers } from './resolvers/query';
 import { actionResolvers } from './resolvers/action';
 import { triggerResolvers } from './resolvers/trigger';
 import { nodeObjectResolvers } from './resolvers/nodeObject';
-import { ForbiddenError, ValidationError } from './utils/errors';
+import { ForbiddenError } from './utils/errors';
 import cors from 'cors';
 import { GraphQLJSON, GraphQLLong } from 'graphql-scalars';
 
