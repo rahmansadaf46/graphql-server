@@ -44,6 +44,11 @@ const server = new ApolloServer({
   context: ({ req }: { req: express.Request }) => {
     try {
       const authHeader = req.headers.authorization || '';
+  
+      if (req.method === 'OPTIONS' || !authHeader) {
+        return { isAuthenticated: false };
+      }
+  
       const isAuthenticated = authenticate(authHeader);
       return { isAuthenticated };
     } catch (error) {
@@ -51,6 +56,8 @@ const server = new ApolloServer({
       throw new ForbiddenError('Unauthorized: Invalid or missing token');
     }
   },
+  
+  
   formatError: (error) => {
     logger.error('GraphQL Error:', error);
     return {
